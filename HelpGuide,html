@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <base target="_top">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #2563eb;       
+      --secondary: #1e40af;
+      --success: #22c55e;       
+      --warning: #f59e0b;       
+      --danger: #ef4444;        
+      --dark: #0f172a;          
+      --bg: #f8fafc;
+      --card: #ffffff;
+      --text: #334155;
+      --border: #e2e8f0;
+    }
+
+    /* Adicione/Substitua isso no início do seu CSS */
+    
+    html, body {
+      height: 100%; /* Garante que o fundo ocupe toda a altura da janela */
+      margin: 0;    /* Remove margem branca padrão do navegador */
+      padding: 0;   /* Remove padding padrão */
+      background-color: var(--bg); /* Aplica a cor de fundo em TUDO */
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      overflow: hidden; /* Evita barra de rolagem dupla (se usar container com scroll) */
+    }
+
+    /* Ajuste o container para ter o scroll interno, se necessário */
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 20px 15px 60px 15px; /* Padding interno para não colar nas bordas */
+      height: 100%; /* Ocupa a altura disponível */
+      overflow-y: auto; /* Scroll apenas dentro do container se precisar */
+      box-sizing: border-box; /* Garante que o padding não estoure a largura */
+    }
+
+    /* --- HEADER --- */
+    .header {
+      background: linear-gradient(135deg, var(--dark) 0%, var(--secondary) 100%);
+      color: white; padding: 35px 20px; text-align: center;
+    }
+    .header h1 { margin: 0; font-size: 26px; font-weight: 800; }
+    .header p { margin: 8px 0 0; opacity: 0.8; font-size: 15px; }
+    
+    /* --- NAVEGAÇÃO --- */
+    .nav-bar {
+      display: flex; justify-content: center; background: white; 
+      padding: 0 10px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+      position: sticky; top: 0; z-index: 100; overflow-x: auto;
+    }
+    .nav-btn {
+      padding: 14px 18px; border: none; background: none; font-weight: 600; color: #64748b;
+      cursor: pointer; border-bottom: 3px solid transparent; display: flex; align-items: center; gap: 8px;
+      white-space: nowrap; font-size: 13px;
+    }
+    .nav-btn:hover { color: var(--primary); background: #f8fafc; }
+    .nav-btn.active { color: var(--primary); border-bottom-color: var(--primary); }
+
+    /* --- LAYOUT --- */
+    .section { display: none; animation: fadeIn 0.3s ease; }
+    .section.active { display: block; }
+    @keyframes fadeIn { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }
+
+    .ui-group { margin-bottom: 30px; }
+    h2 { color: var(--dark); font-size: 18px; font-weight: 700; margin-bottom: 15px; display: flex; align-items: center; gap: 8px; }
+    h2 i { color: var(--primary); }
+
+    /* --- SIMULAÇÃO DE UI (BOTÕES E INTERFACE) --- */
+    .sim-panel {
+      background: white; border: 1px solid var(--border); border-radius: 10px;
+      padding: 20px; position: relative; box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+    }
+
+    /* Botões Simulados */
+    .btn-sim {
+      display: inline-flex; align-items: center; justify-content: center; gap: 5px;
+      height: 32px; padding: 0 12px; border-radius: 6px; font-size: 12px; font-weight: 600;
+      cursor: default; user-select: none;
+    }
+    .btn-sim.default { background: white; border: 1px solid #cbd5e1; color: #333; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
+    .btn-sim.primary { background: linear-gradient(90deg, #6ee7ff, #a78bfa); color: #0f172a; border: none; }
+    .btn-sim.green { background: #dcfce7; color: #15803d; border: 1px solid #86efac; }
+    .btn-sim.icon { width: 32px; padding: 0; }
+
+    /* Inputs Simulados */
+    .input-sim {
+      background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 6px;
+      padding: 6px 10px; font-family: monospace; color: #475569; font-size: 12px; display: inline-block;
+    }
+
+    /* Lista Lateral Simulada */
+    .sidebar-sim {
+      display: flex; align-items: center; gap: 10px; background: rgba(0,0,0,0.03); 
+      padding: 8px; border-radius: 8px; border: 1px solid var(--border); width: fit-content;
+    }
+    .sidebar-card {
+      background: #e2e8f0; padding: 5px 10px; border-radius: 4px; font-size: 11px;
+      border-left: 3px solid var(--primary);
+    }
+
+    /* Destaques de Ação */
+    .action-row {
+      display: flex; align-items: flex-start; gap: 15px; margin-bottom: 20px;
+      padding-bottom: 20px; border-bottom: 1px dashed var(--border);
+    }
+    .action-row:last-child { border-bottom: none; }
+    .action-visual { flex: 0 0 160px; display: flex; flex-direction: column; align-items: center; gap: 8px; }
+    .action-text { flex: 1; }
+    .action-text h4 { margin: 0 0 5px 0; font-size: 14px; color: var(--dark); }
+    .action-text p { margin: 0; font-size: 13px; color: #64748b; line-height: 1.5; }
+
+    /* Alertas */
+    .tip-box {
+      background: #fffbeb; border-left: 4px solid var(--warning); padding: 12px;
+      border-radius: 6px; font-size: 13px; color: #92400e; margin-top: 10px;
+    }
+    .tip-box strong { display: block; margin-bottom: 4px; }
+
+    /* Timeline */
+    .timeline { border-left: 2px solid #e2e8f0; margin-left: 10px; padding-left: 20px; }
+    .t-item { position: relative; margin-bottom: 20px; }
+    .t-item::before {
+      content: ''; position: absolute; left: -26px; top: 0; width: 10px; height: 10px;
+      border-radius: 50%; background: var(--primary); border: 2px solid white; box-shadow: 0 0 0 2px #e2e8f0;
+    }
+    .t-title { font-weight: 700; font-size: 14px; margin-bottom: 4px; color: var(--dark); }
+    .t-desc { font-size: 13px; color: #64748b; }
+
+    .tag { padding: 2px 6px; border-radius: 4px; font-size: 10px; font-weight: bold; text-transform: uppercase; }
+    .tag.pront { background: #fef3c7; color: #b45309; border: 1px solid #fcd34d; }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <i class="material-icons" style="font-size: 40px; margin-bottom: 10px; opacity:0.8;">desktop_windows</i>
+    <h1>Central de Treinamentos SAMIS</h1>
+    <p>Guia visual e prático para gestão eficiente de requerimentos</p>
+  </div>
+
+  <div class="nav-bar">
+    <button class="nav-btn active" onclick="show('nav')"><i class="material-icons">explore</i> Navegação</button>
+    <button class="nav-btn" onclick="show('atend')"><i class="material-icons">edit_note</i> O Atendimento</button>
+    <button class="nav-btn" onclick="show('fluxo')"><i class="material-icons">account_tree</i> Fluxos</button>
+    <button class="nav-btn" onclick="show('tema')"><i class="material-icons">palette</i> Visual</button>
+  </div>
+
+  <div class="container">
+
+    <div id="nav" class="section active">
+      <div class="ui-group">
+        <h2><i class="material-icons">search</i> Encontrando Pacientes</h2>
+        <div class="sim-panel">
+          
+          <div class="action-row">
+            <div class="action-visual">
+              <div style="display:flex; gap:5px;">
+                <span class="btn-sim default">Ir</span>
+                <span class="btn-sim default">Prx. Pendente</span>
+              </div>
+            </div>
+            <div class="action-text">
+              <h4>Navegação Direta (Essenciais)</h4>
+              <p>Use o seletor <strong>Aba (Mês)</strong> e digite o número da linha para ir direto a um caso. 
+              O botão <strong>"Prx. Pendente"</strong> é seu melhor amigo: ele varre a planilha e pula automaticamente para a próxima linha vazia.</p>
+            </div>
+          </div>
+
+          <div class="action-row">
+            <div class="action-visual">
+              <div class="sidebar-sim">
+                <div class="sidebar-card">
+                  <strong>138523</strong><br>FULANO...
+                </div>
+                <span class="btn-sim default icon"><i class="material-icons" style="font-size:14px">content_copy</i></span>
+              </div>
+            </div>
+            <div class="action-text">
+              <h4>Lista Lateral (Pendentes)</h4>
+              <p>A barra lateral esquerda mostra a fila de espera. 
+              <br>• Clique no <strong>Cartão</strong> para carregar aquele paciente.
+              <br>• Clique no <strong>Botão Copiar</strong> ao lado para copiar "Prontuário - Nome".</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div id="atend" class="section">
+      
+      <div class="ui-group">
+        <h2><i class="material-icons">content_paste</i> Ferramentas de Cópia Rápida</h2>
+        <div class="sim-panel">
+          <p style="font-size:13px; margin-bottom:15px;">Ganhe tempo copiando dados sem selecionar texto:</p>
+          
+          <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
+            <div style="background:#f1f5f9; padding:10px; border-radius:8px; text-align:center;">
+              <span class="tag pront">13852363</span> <i class="material-icons" style="font-size:12px; color:#64748b;">content_copy</i>
+              <p style="font-size:11px; color:#64748b; margin:5px 0 0;">Clique no número grande no topo para copiar apenas o Prontuário.</p>
+            </div>
+            <div style="background:#f1f5f9; padding:10px; border-radius:8px; text-align:center;">
+              <span style="font-family:monospace; background:#e2e8f0; padding:2px;">16375119 / 1645...</span>
+              <p style="font-size:11px; color:#64748b; margin:5px 0 0;">Clique em qualquer número no campo "Solicitações" para copiá-lo.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="ui-group">
+        <h2><i class="material-icons">badge</i> Assumir e Anexar</h2>
+        <div class="sim-panel">
+          
+          <div class="action-row">
+            <div class="action-visual">
+              <span class="btn-sim default icon"><i class="material-icons">person_add</i></span>
+            </div>
+            <div class="action-text">
+              <h4>1. Assumir Atendimento</h4>
+              <p>Clique no botão de "Bonequinho" ao lado do campo Data. Ele preenche automaticamente:</p>
+              <ul style="margin:5px 0; padding-left:20px; font-size:12px; color:#475569;">
+                <li>Seu Nome (no campo Atendimento)</li>
+                <li>A Data de Hoje</li>
+                <li>E já Salva a linha para reservar para você.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="action-row">
+            <div class="action-visual">
+              <span class="btn-sim default icon"><i class="material-icons">attach_file</i></span>
+            </div>
+            <div class="action-text">
+              <h4>2. Anexar Arquivos (O Clipe Mágico)</h4>
+              <p>Não anexe manualmente no Drive! Use este botão. Ele faz tudo:</p>
+              <ul style="margin:5px 0; padding-left:20px; font-size:12px; color:#475569;">
+                <li>Aceita múltiplos PDFs ou Imagens (JPG/PNG).</li>
+                <li>Junta tudo em um único PDF.</li>
+                <li>Renomeia para o padrão "Prontuário - Nome".</li>
+                <li><strong>Conta as folhas</strong> e preenche o campo "Nº de folhas".</li>
+                <li>Gera o link e cola no campo "Link Google Drive".</li>
+              </ul>
+              <div class="tip-box">
+                <strong>Dica:</strong> Se o arquivo for gigante (+20MB), ele divide sozinho em "Parte 1", "Parte 2", etc.
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div id="fluxo" class="section">
+      <div class="ui-group">
+        <h2><i class="material-icons">traffic</i> Dois Caminhos Possíveis</h2>
+        
+        <div class="sim-panel" style="border-left: 4px solid var(--success);">
+          <h3 style="color:var(--success); margin-top:0;">A. Próprio Paciente</h3>
+          <div class="timeline">
+            <div class="t-item">
+              <div class="t-title">Verificar Dados</div>
+              <div class="t-desc">Confira se é o próprio paciente. A pasta já nasce liberada.</div>
+            </div>
+            <div class="t-item">
+              <div class="t-title">Anexar Prontuário</div>
+              <div class="t-desc">Use o botão de clipe <i class="material-icons" style="font-size:12px">attach_file</i>.</div>
+            </div>
+            <div class="t-item">
+              <div class="t-title">Enviar e Salvar</div>
+              <div class="t-desc">Envie o e-mail (se digital) e clique em <span class="btn-sim primary" style="height:20px; font-size:10px;">Salvar</span>.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="sim-panel" style="border-left: 4px solid var(--danger); margin-top:20px;">
+          <h3 style="color:var(--danger); margin-top:0;">B. Terceiro (Cuidado!)</h3>
+          <div class="tip-box" style="background:#fef2f2; border-color:#ef4444; color:#991b1b; margin-bottom:15px;">
+            A pasta nasce <strong>BLOQUEADA</strong>. O botão "Salvar" não deixa finalizar como "0" enquanto não liberar.
+          </div>
+          
+          <div class="timeline">
+            <div class="t-item">
+              <div class="t-title">1. Anexar Documentos</div>
+              <div class="t-desc">Clique no botão cinza <span class="btn-sim default" style="height:20px; font-size:10px;">Anexar DOCS</span>. Suba a Procuração/ID.</div>
+            </div>
+            <div class="t-item">
+              <div class="t-title">2. Liberar Pasta</div>
+              <div class="t-desc">No modal, marque o Checkbox de conferência e clique em <strong>Liberar</strong>.</div>
+            </div>
+            <div class="t-item">
+              <div class="t-title">3. Fluxo Normal</div>
+              <div class="t-desc">Agora a pasta destrancou. Pode subir o prontuário e enviar.</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div id="tema" class="section">
+      <div class="ui-group">
+        <h2><i class="material-icons">visibility</i> Identidade Visual</h2>
+        <div class="sim-panel">
+          
+          <div class="action-row">
+            <div class="action-visual">
+              <div class="input-sim" style="background:#fffbeb; color:#b45309; border-color:#fcd34d; font-weight:bold;">
+                Pedido: MARIDO
+              </div>
+            </div>
+            <div class="action-text">
+              <h4>Alerta de Portador (Amarelo)</h4>
+              <p>Se o campo "Pedido realizado por" ficar amarelo, significa que há um portador autorizado (não é o paciente).
+              <br>👉 <strong>Clique no campo amarelo</strong> para ver o CPF e nome completo do portador.</p>
+            </div>
+          </div>
+
+          <div class="action-row">
+            <div class="action-visual">
+              <div class="input-sim" style="width:100px; text-align:right;">Windows Aero</div>
+            </div>
+            <div class="action-text">
+              <h4>Temas</h4>
+              <p>Cansou do visual? No rodapé da ferramenta, você pode trocar o tema (Escuro, Claro, Windows XP, Aero, Cyberpunk...). O sistema lembra sua escolha.</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    function show(id) {
+      document.querySelectorAll('.section').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.nav-btn').forEach(el => el.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+      event.currentTarget.classList.add('active');
+    }
+  </script>
+</body>
+</html>
