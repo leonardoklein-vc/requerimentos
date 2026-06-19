@@ -1,0 +1,998 @@
+<style>
+  /* =========================================
+     VARIÁVEIS GERAIS E TEMAS
+     ========================================= */
+  :root {
+    /* --- TEMA ESCURO (PADRÃO) --- */
+    --bg: #0b1220;
+    --txt: #e8eefc;
+    --muted: #a7b3d6;
+    --line: rgba(255, 255, 255, .10);
+    --card: rgba(15, 27, 51, .88);
+    --shadow: 0 12px 30px rgba(0, 0, 0, .35);
+    --r: 18px;
+    --a: #6ee7ff; --b: #a78bfa;
+    --ok: #34d399; --err: #fb7185;
+    --pront: #fbbf24;
+    --prontBg: rgba(251, 191, 36, .14);
+    --prontBorder: rgba(251, 191, 36, .35);
+    --green: #22c55e;
+    --greenLine: rgba(34, 197, 94, .30);
+    --greenBg: linear-gradient(180deg, rgba(34, 197, 94, .10), rgba(15, 27, 51, .88));
+    --input-bg: rgba(18, 32, 67, .85);
+    --input-border: rgba(255, 255, 255, .14);
+    --backdrop: none;
+    --header-bg: rgba(255, 255, 255, .03);
+    --btn-txt: #08111f;
+  }
+  /* --- TEMA CLARO --- */
+  [data-theme="light"] {
+    --bg: #f1f5f9;
+    --txt: #0f172a;
+    --muted: #475569;
+    --line: #cbd5e1;
+    --card: #ffffff;
+    --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    --a: #2563eb; --b: #4f46e5;
+    --ok: #16a34a; --err: #dc2626;
+    --pront: #b45309;
+    --prontBg: #fff7ed;
+    --prontBorder: #fcd34d;
+    --green: #15803d;
+    --greenLine: #86efac;
+    --greenBg: #f0fdf4;
+    --input-bg: #ffffff;
+    --input-border: #cbd5e1;
+    --header-bg: #f8fafc;
+    --btn-txt: #ffffff;
+  }
+  /* --- TEMA WINDOWS XP (LUNA) --- */
+  [data-theme="xp"] {
+    --bg: #587cce;
+    --txt: #000000;
+    --muted: #444444;
+    --line: #0055ea;
+    --card: #ffffff;
+    --shadow: 2px 2px 5px rgba(0,0,0,0.3);
+    --r: 8px;
+    --a: #3988f0; --b: #245edb;
+    --ok: #4caf50; --err: #f44336;
+    --pront: #e65100;
+    --prontBg: #fff3e0;
+    --prontBorder: #ff9800;
+    --green: #2e7d32;
+    --greenLine: #81c784;
+    --greenBg: #e8f5e9;
+    --input-bg: #ffffff;
+    --input-border: #7f9db9;
+    --header-bg: linear-gradient(to bottom, #eff3ff 0%, #dae5f4 100%);
+    --btn-txt: #ffffff;
+  }
+  /* --- TEMA WINDOWS AERO (VISTA/7) --- */
+  [data-theme="aero"] {
+    --bg: #386d81;
+    --txt: #000000;
+    --muted: #222222;
+    --line: rgba(255, 255, 255, 0.5);
+    --card: rgba(255, 255, 255, 0.75);
+    --shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    --r: 12px;
+    --a: #0078d7; --b: #005a9e;
+    --ok: #008000; --err: #b91c1c;
+    --pront: #9a3412;
+    --prontBg: rgba(255, 237, 213, 0.6);
+    --prontBorder: #fdba74;
+    --green: #064e3b;
+    --greenLine: #34d399;
+    --greenBg: rgba(209, 250, 229, 0.6);
+    --input-bg: rgba(255, 255, 255, 0.9);
+    --input-border: #8ab0c2;
+    --backdrop: blur(12px);
+    --header-bg: rgba(255, 255, 255, 0.3);
+    --btn-txt: #ffffff;
+  }
+  /* --- TEMA ALTO CONTRASTE --- */
+  [data-theme="contrast"] {
+    --bg: #000000;
+    --txt: #ffffff;
+    --muted: #ffff00;
+    --line: #ffffff;
+    --card: #000000;
+    --shadow: none;
+    --r: 0px;
+    --a: #00ffff; --b: #00ffff;
+    --ok: #00ff00; --err: #ff0000;
+    --pront: #ffff00;
+    --prontBg: #000000;
+    --prontBorder: #ffff00;
+    --green: #00ff00;
+    --greenLine: #ffffff;
+    --greenBg: #000000;
+    --input-bg: #000000;
+    --input-border: #ffffff;
+    --header-bg: #000000;
+    --btn-txt: #000000;
+  }
+  /* --- TEMA NATAL --- */
+  [data-theme="natal"] {
+    --bg: #800e13;
+    --txt: #1a1a1a;
+    --muted: #555555;
+    --line: #da2c38;
+    --card: #fdfbf7;
+    --shadow: 0 10px 20px rgba(0,0,0,0.3);
+    --r: 16px;
+    --a: #c31e28; --b: #1b4332;
+    --ok: #1b4332; --err: #c31e28;
+    --pront: #d4af37;
+    --prontBg: #fffce8;
+    --prontBorder: #d4af37;
+    --green: #1b4332;
+    --greenLine: #226f54;
+    --greenBg: #eafcf4;
+    --input-bg: #ffffff;
+    --input-border: #b8cba8;
+    --header-bg: #f2f0eb;
+    --btn-txt: #ffffff;
+  }
+  /* --- TEMA CYBERPUNK (NEON) --- */
+  [data-theme="cyber"] {
+    --bg: #050510;
+    --txt: #e0e0ff;
+    --muted: #00f3ff;
+    --line: #ff00ff;
+    --card: rgba(10, 10, 20, 0.9);
+    --shadow: 0 0 20px rgba(255, 0, 255, 0.15);
+    --r: 4px;
+    --a: #ff00ff; --b: #7000ff;
+    --ok: #00ff99; --err: #ff0055;
+    --pront: #ffee00;
+    --prontBg: rgba(255, 238, 0, 0.05);
+    --prontBorder: #ffee00;
+    --green: #00ff99;
+    --greenLine: #00ff99;
+    --greenBg: rgba(0, 255, 153, 0.05);
+    --input-bg: #0a0a14;
+    --input-border: #00f3ff;
+    --header-bg: rgba(255, 0, 255, 0.1);
+    --btn-txt: #ffffff;
+  }
+  /* =========================================
+     ESTILOS GERAIS
+     ========================================= */
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: system-ui, -apple-system, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--txt);
+    transition: background 0.3s ease, color 0.3s ease;
+    overflow-x: hidden;
+  }
+  body::before {
+    content: "";
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: radial-gradient(1200px 700px at 15% 10%, rgba(110,231,255,.12), transparent 60%),
+                radial-gradient(900px 600px at 80% 20%, rgba(167,139,250,.14), transparent 55%);
+    pointer-events: none;
+    z-index: -1;
+  }
+  [data-theme="light"] body::before { opacity: 0.4; }
+  [data-theme="contrast"] body::before { display: none; }
+  [data-theme="xp"] body { background: linear-gradient(to bottom, #6d93e9 0%, #3a6ea5 100%); }
+  [data-theme="xp"] body::before { display: none; }
+  [data-theme="aero"] body { background: linear-gradient(135deg, #306578, #609aa8); }
+  [data-theme="natal"] body { background: radial-gradient(circle at top left, #ad2831, #640d14); }
+  [data-theme="natal"] body::before { background-image: radial-gradient(white 1px, transparent 1px); background-size: 50px 50px; opacity: 0.1; }
+  .wrap {
+    padding: 16px;
+    padding-bottom: 12px;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    gap: 12px;
+  }
+  /* =========================================
+     HEADER SUPERIOR
+     ========================================= */
+  .top {
+    border: 1px solid var(--line);
+    background: var(--card);
+    border-radius: var(--r);
+    padding: 12px;
+    box-shadow: var(--shadow);
+    display: grid;
+    grid-template-columns: 240px 1fr auto;
+    gap: 12px;
+    align-items: center;
+    backdrop-filter: var(--backdrop);
+  }
+  [data-theme="xp"] .top {
+    background: linear-gradient(to bottom, #245edc 0%, #3e88f6 100%);
+    border: 2px solid #fff;
+    border-radius: 8px 8px 0 0;
+  }
+  [data-theme="xp"] .metaTop .k, [data-theme="xp"] .metaTop .v, [data-theme="xp"] .top #lockInfo, [data-theme="xp"] .top #status {
+    color: #fff; text-shadow: 1px 1px rgba(0,0,0,0.3);
+  }
+  .metaTop { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+  .metaTop .k { font-size: 11px; color: var(--muted); font-weight: 600; }
+  .metaTop .v { font-size: 13px; font-weight: 900; }
+  #lockInfo { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 240px; }
+  .topCenter { display: flex; gap: 12px; justify-content: center; align-items: stretch; }
+  /* =========================================
+     CARD DE CORREÇÃO
+     ========================================= */
+  .correctionBox {
+    border: 1px solid rgba(248, 113, 113, 0.4);
+    background: linear-gradient(180deg, rgba(239, 68, 68, 0.15), rgba(127, 29, 29, 0.7));
+    border-radius: 16px;
+    padding: 10px 14px;
+    min-width: 200px;
+    max-width: 320px;
+    text-align: center;
+    box-shadow: 0 10px 24px rgba(0,0,0,.25);
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    animation: pulseRed 2s infinite;
+  }
+  [data-theme="light"] .correctionBox, [data-theme="xp"] .correctionBox, [data-theme="aero"] .correctionBox, [data-theme="natal"] .correctionBox {
+    background: #ffebe9; border-color: #ef4444; box-shadow: 0 2px 8px rgba(220, 38, 38, 0.2);
+  }
+  [data-theme="contrast"] .correctionBox { background: #000; border: 2px solid #ff0000; animation: none; }
+  .correctionLabel { font-size: 11px; letter-spacing: .9px; text-transform: uppercase; color: #fca5a5; margin-bottom: 6px; font-weight: bold; display: flex; align-items: center; justify-content: center; gap: 6px; }
+  [data-theme="light"] .correctionLabel, [data-theme="xp"] .correctionLabel, [data-theme="aero"] .correctionLabel, [data-theme="natal"] .correctionLabel { color: #dc2626; }
+  .correctionValue { font-size: 13px; font-weight: 700; color: #fecaca; line-height: 1.3; white-space: pre-wrap; }
+  [data-theme="light"] .correctionValue, [data-theme="xp"] .correctionValue, [data-theme="aero"] .correctionValue, [data-theme="natal"] .correctionValue { color: #991b1b; }
+  @keyframes pulseRed {
+    0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4); }
+    70% { box-shadow: 0 0 0 10px rgba(239, 68, 68, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+  }
+  /* =========================================
+     CARD PRONTUÁRIO
+     ========================================= */
+  .prontBox {
+    border: 1px solid var(--prontBorder);
+    background: var(--prontBg);
+    border-radius: var(--r);
+    padding: 10px 14px;
+    min-width: 340px;
+    text-align: center;
+    justify-self: center;
+    box-shadow: 0 10px 24px rgba(0,0,0,.25);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  [data-theme="light"] .prontBox, [data-theme="xp"] .prontBox, [data-theme="aero"] .prontBox, [data-theme="natal"] .prontBox {
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  }
+  [data-theme="contrast"] .prontBox { border: 2px solid var(--pront); box-shadow: none; }
+  /* Card de Prontuário da Visão Email (segue mesmo estilo) */
+  #viewEmail .prontBox {
+    border: 1px solid var(--prontBorder);
+    background: var(--prontBg);
+    border-radius: var(--r);
+    padding: 10px 14px;
+    min-width: 340px;
+    text-align: center;
+    box-shadow: 0 10px 24px rgba(0,0,0,.25);
+  }
+  [data-theme="light"] #viewEmail .prontBox,
+  [data-theme="xp"] #viewEmail .prontBox,
+  [data-theme="aero"] #viewEmail .prontBox,
+  [data-theme="natal"] #viewEmail .prontBox {
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  }
+  [data-theme="contrast"] #viewEmail .prontBox {
+    border: 2px solid var(--pront);
+    box-shadow: none;
+  }
+  .prontLabel { font-size: 11px; letter-spacing: .9px; text-transform: uppercase; color: var(--pront); display: flex; justify-content: center; align-items: center; gap: 10px; font-weight: 700; }
+  .prontRow { display: flex; align-items: center; justify-content: center; gap: 10px; margin-top: 6px; }
+  .prontValue { font-size: 30px; font-weight: 900; letter-spacing: 1px; color: var(--pront); line-height: 1.05; }
+  .copyBtn {
+    width: 36px; height: 36px; border-radius: 12px;
+    border: 1px solid var(--prontBorder);
+    background: rgba(255,255,255,.06);
+    color: var(--txt);
+    display: inline-flex; align-items: center; justify-content: center;
+    cursor: pointer; padding: 0;
+  }
+  [data-theme="light"] .copyBtn, [data-theme="xp"] .copyBtn, [data-theme="aero"] .copyBtn, [data-theme="natal"] .copyBtn {
+    background: #fff; border-color: var(--pront); color: var(--pront);
+  }
+  [data-theme="contrast"] .copyBtn { border: 2px solid #fff; color: #fff; border-radius: 0; background: #000; }
+  .copyBtn:hover { border-color: var(--a); box-shadow: 0 0 0 4px rgba(110,231,255,.12); }
+  [data-theme="light"] .copyBtn:hover, [data-theme="xp"] .copyBtn:hover, [data-theme="natal"] .copyBtn:hover {
+    background: #fff7ed; border-color: var(--pront); box-shadow: 0 0 0 2px rgba(0,0,0,0.1);
+  }
+  [data-theme="contrast"] .copyBtn:hover { background: #fff; color: #000; }
+  /* =========================================
+     CARD PERÍODO
+     ========================================= */
+  .periodoBox {
+    border: 1px solid var(--line);
+    background: rgba(110,231,255,.04);
+    border-radius: var(--r);
+    padding: 8px 16px;
+    display: flex; flex-direction: column; justify-content: center; gap: 6px; min-width: 150px;
+  }
+  [data-theme="light"] .periodoBox, [data-theme="xp"] .periodoBox, [data-theme="aero"] .periodoBox { background: #f0f9ff; border-color: #bae6fd; }
+  [data-theme="natal"] .periodoBox { background: #f0fdf4; border-color: #86efac; }
+  [data-theme="contrast"] .periodoBox { border: 2px solid #fff; background: #000; }
+  .periodoRow { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+  .periodoLabel { font-size: 10px; text-transform: uppercase; color: var(--muted); font-weight: 700; }
+  .periodoValue { font-size: 13px; font-weight: 700; color: var(--txt); text-align: right; }
+  /* =========================================
+     TOAST E PILL
+     ========================================= */
+  .copyToast {
+    position: fixed; right: 18px; top: 18px; padding: 10px 12px;
+    border-radius: 12px; background: rgba(15,27,51,.92); border: 1px solid rgba(255,255,255,.14);
+    color: var(--txt); box-shadow: var(--shadow); font-size: 12px;
+    opacity: 0; transform: translateY(-6px); pointer-events: none; transition: .18s ease; z-index: 9999;
+  }
+  [data-theme="light"] .copyToast, [data-theme="xp"] .copyToast, [data-theme="aero"] .copyToast {
+    background: #fff; color: #0f172a; border: 1px solid #ccc;
+  }
+  .copyToast.show { opacity: 1; transform: translateY(0); }
+  .pill {
+    justify-self: end; display: inline-flex; align-items: center; gap: 8px; padding: 7px 10px;
+    border-radius: 999px; font-size: 12px; border: 1px solid var(--line); background: rgba(255,255,255,.05);
+    color: var(--muted); white-space: nowrap; font-weight: 600;
+  }
+  [data-theme="light"] .pill, [data-theme="xp"] .pill, [data-theme="aero"] .pill, [data-theme="natal"] .pill { background: #f8fafc; }
+  [data-theme="contrast"] .pill { border: 2px solid #fff; border-radius: 0; background: #000; color: #fff; }
+  .pill.ok { color: var(--ok); border-color: var(--ok); }
+  [data-theme="light"] .pill.ok, [data-theme="xp"] .pill.ok { border-color: #86efac; background: #f0fdf4; color: #166534; }
+  .pill.err { color: var(--err); border-color: var(--err); }
+  [data-theme="light"] .pill.err, [data-theme="xp"] .pill.err { border-color: #fca5a5; background: #fef2f2; color: #991b1b; }
+  /* Pill específico da visão Email (azul) */
+  .pill-email {
+    color: var(--a) !important;
+    border-color: var(--a) !important;
+  }
+  [data-theme="light"] .pill-email,
+  [data-theme="xp"] .pill-email {
+    border-color: var(--a) !important;
+    background: #eff6ff !important;
+    color: #1e40af !important;
+  }
+  /* =========================================
+     GRID PRINCIPAL
+     ========================================= */
+  .grid {
+    margin-top: 12px;
+    display: grid;
+    grid-template-columns: .55fr 1.05fr .95fr;
+    gap: 12px;
+    align-items: start;
+    flex: 1;
+  }
+  /* Grid específico para visão Email (2 colunas) */
+  #viewEmail .grid {
+    grid-template-columns: 360px 1fr;
+    height: calc(100vh - 200px);
+    gap: 12px;
+  }
+  .card {
+    border: 1px solid var(--line);
+    background: var(--card);
+    border-radius: var(--r);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    backdrop-filter: var(--backdrop);
+  }
+  [data-theme="contrast"] .card { border: 2px solid #fff; }
+  .card h3 {
+    margin: 0;
+    padding: 14px 16px;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: .9px;
+    color: var(--muted);
+    border-bottom: 1px solid var(--line);
+    background: var(--header-bg);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    font-weight: 700;
+  }
+  [data-theme="xp"] .card h3 { background: linear-gradient(to bottom, #fff 0%, #ececec 100%); color: #000; }
+  [data-theme="contrast"] .card h3 { background: #000; color: #fff; border-bottom: 2px solid #fff; }
+  .card.green { border-color: var(--greenLine); background: var(--greenBg); }
+  [data-theme="contrast"] .card.green { background: #000; border: 2px solid #00ff00; }
+  .card.green h3 { border-bottom-color: var(--greenLine); color: var(--green); }
+  [data-theme="light"] .card.green h3, [data-theme="xp"] .card.green h3, [data-theme="natal"] .card.green h3 { background: #dcfce7; color: #166534; }
+  [data-theme="contrast"] .card.green h3 { color: #00ff00; border-bottom: 2px solid #00ff00; background: #000; }
+  .sec {
+    padding: 14px;
+    display: grid;
+    gap: 12px;
+  }
+  /* Espaçamento específico para a visão Email */
+  #viewEmail .sec {
+    padding: 14px;
+    gap: 12px;
+  }
+  .row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .row3 { display: grid; grid-template-columns: 1.35fr 0.65fr auto auto; gap: 10px; align-items: end; }
+  .rowMotivoEnvio { display: grid; grid-template-columns: 2fr 1.2fr; gap: 10px; align-items: end; }
+  .obsRow { display: grid; grid-template-columns: 1fr 160px; gap: 10px; align-items: start; }
+  label { font-size: 11px; color: var(--muted); margin-bottom: 6px; display: block; font-weight: 600; }
+  /* =========================================
+     INPUTS
+     ========================================= */
+  input, select, textarea {
+    width: 100%;
+    border: 1px solid var(--input-border);
+    background: var(--input-bg);
+    color: var(--txt);
+    padding: 10px;
+    border-radius: 12px;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  [data-theme="xp"] input, [data-theme="xp"] select, [data-theme="xp"] textarea { border-radius: 2px; }
+  [data-theme="contrast"] input, [data-theme="contrast"] select, [data-theme="contrast"] textarea { border: 2px solid #fff; border-radius: 0; }
+  textarea { resize: vertical; }
+  input:focus, select:focus, textarea:focus {
+    border-color: var(--a);
+    box-shadow: 0 0 0 4px rgba(110,231,255,.12);
+  }
+  [data-theme="light"] input:focus, [data-theme="xp"] input:focus, [data-theme="aero"] input:focus {
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+  }
+  [data-theme="contrast"] input:focus, [data-theme="contrast"] select:focus, [data-theme="contrast"] textarea:focus {
+    border-color: #ffff00; box-shadow: none; outline: 2px solid #ffff00;
+  }
+  .bigInput { border-color: var(--prontBorder); background: linear-gradient(180deg, var(--prontBg), rgba(18,32,67,.85)); }
+  [data-theme="light"] .bigInput, [data-theme="xp"] .bigInput, [data-theme="aero"] .bigInput, [data-theme="natal"] .bigInput {
+    background: #ffffff; border-color: #e2e8f0;
+  }
+  [data-theme="light"] .card.green .bigInput, [data-theme="natal"] .card.green .bigInput {
+    border-color: var(--greenLine);
+  }
+  [data-theme="contrast"] .bigInput { background: #000; border: 2px solid #fff; }
+  .motivo1linha { height: 44px; resize: none; overflow: hidden; }
+  #quemAtendeuSamis { text-transform: uppercase; }
+  .ro { opacity: .85; filter: saturate(.9); }
+  input[readonly], textarea[readonly] {
+    opacity: .7; cursor: not-allowed; background: rgba(0,0,0,0.2); border-color: transparent;
+  }
+  [data-theme="light"] input[readonly], [data-theme="light"] textarea[readonly],
+  [data-theme="xp"] input[readonly], [data-theme="xp"] textarea[readonly],
+  [data-theme="aero"] input[readonly], [data-theme="aero"] textarea[readonly],
+  [data-theme="natal"] input[readonly], [data-theme="natal"] textarea[readonly] {
+    background: #f1f5f9; border-color: #e2e8f0; color: #64748b; opacity: 1;
+  }
+  [data-theme="contrast"] input[readonly] { border: 2px dashed #fff; background: #000; opacity: 1; color: #fff; }
+  .readonly-selectable {
+    cursor: text;
+    user-select: text;
+    pointer-events: auto;
+  }
+  .readonly-selectable:hover {
+    border-color: var(--a);
+  }
+  /* Espaçamento melhor para inputs da visão Email */
+  #viewEmail input,
+  #viewEmail textarea,
+  #viewEmail select {
+    margin-bottom: 0;
+  }
+  #viewEmail .ro {
+    margin-bottom: 0;
+  }
+  /* Espaçamento entre grupos de campos */
+  #viewEmail .sec > div {
+    margin-bottom: 0;
+  }
+  /* =========================================
+     BOTÕES
+     ========================================= */
+  button {
+    border: 0; cursor: pointer; padding: 10px 12px; border-radius: 12px;
+    font-weight: 900;
+    background: linear-gradient(90deg, var(--a), var(--b));
+    color: var(--btn-txt);
+    white-space: nowrap;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+  }
+  [data-theme="xp"] button {
+    border-radius: 4px;
+    background: linear-gradient(to bottom, #87c376 0%, #35a54e 100%);
+    border: 1px solid #2b7a42;
+    text-shadow: 1px 1px 0px rgba(0,0,0,0.2);
+  }
+  [data-theme="aero"] button {
+    background: linear-gradient(to bottom, rgba(255,255,255,0.5), rgba(255,255,255,0.1));
+    background-color: var(--a);
+    border: 1px solid rgba(255,255,255,0.4);
+    text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+  }
+  [data-theme="contrast"] button {
+    background: #000; border: 2px solid #fff; color: #ffff00; box-shadow: none; border-radius: 0;
+  }
+  [data-theme="cyber"] button {
+    border-radius: 2px; box-shadow: 0 0 10px var(--a); text-shadow: 0 0 5px #fff;
+  }
+  button.secondary { background: transparent; color: var(--txt); border: 1px solid var(--line); box-shadow: none; }
+  [data-theme="light"] button.secondary, [data-theme="xp"] button.secondary, [data-theme="aero"] button.secondary, [data-theme="natal"] button.secondary {
+    background: #ffffff; border: 1px solid #cbd5e1; color: #333;
+  }
+  button.secondary:hover { background: rgba(255,255,255,0.05); }
+  [data-theme="light"] button.secondary:hover, [data-theme="xp"] button.secondary:hover {
+    background: #f8fafc; border-color: #94a3b8;
+  }
+  [data-theme="contrast"] button.secondary { border: 2px solid #fff; color: #fff; }
+  button:disabled { opacity: .5; cursor: not-allowed; filter: grayscale(.3); }
+  .btnsBottom { display: flex; justify-content: flex-end; gap: 10px; margin-top: 6px; }
+  .small { font-size: 11px; color: var(--muted); }
+  /* =========================================
+     LISTA DE PENDENTES (COMPARTILHADA)
+     ========================================= */
+  .pendWrap { display: grid; gap: 8px; }
+  .pendList {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-height: 320px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding-right: 6px;
+    width: 100%;
+  }
+  /* Espaçamento específico para lista de Email */
+  #viewEmail .pendList,
+  .emailListWrap {
+    gap: 10px;
+  }
+  /* Container da linha: Card + Botão */
+  .pendRow {
+    display: flex;
+    gap: 10px;
+    align-items: stretch;
+    width: 100%;
+    min-width: 0;
+    margin-bottom: 0;
+  }
+  /* Espaçamento entre linhas da lista Email */
+  .emailListWrap .pendRow {
+    margin-bottom: 10px;
+  }
+  .emailListWrap .pendRow:last-child {
+    margin-bottom: 0;
+  }
+  /* Card com informações (flexível) */
+  .pendItem {
+    flex: 1 1 auto;
+    min-width: 0;
+    text-align: left;
+    background: rgba(255,255,255,.04);
+    border: 1px solid var(--line);
+    color: var(--txt);
+    border-radius: 12px;
+    padding: 10px 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    line-height: 1.3;
+    cursor: pointer;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  [data-theme="light"] .pendItem, [data-theme="xp"] .pendItem, [data-theme="aero"] .pendItem, [data-theme="natal"] .pendItem {
+    background: #ffffff; border-color: #e2e8f0;
+  }
+  [data-theme="xp"] .pendItem { border-radius: 4px; }
+  [data-theme="contrast"] .pendItem { border: 2px solid #fff; border-radius: 0; background: #000; }
+  .pendItem:hover { border-color: var(--a); box-shadow: 0 0 0 3px rgba(110,231,255,.10); }
+  [data-theme="light"] .pendItem:hover, [data-theme="xp"] .pendItem:hover, [data-theme="aero"] .pendItem:hover {
+    border-color: var(--a); box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+  }
+  [data-theme="contrast"] .pendItem:hover { border-color: #ffff00; box-shadow: none; outline: 2px solid #ffff00; }
+  /* Botão de copiar (fixo, ao lado do card) */
+  .pendExternalBtn {
+    width: 42px;
+    min-height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    border: 1px solid var(--line);
+    background: rgba(255,255,255,0.03);
+    color: var(--muted);
+    cursor: pointer;
+    transition: all 0.2s;
+    flex-shrink: 0;
+    padding: 0;
+    box-shadow: none;
+  }
+  [data-theme="light"] .pendExternalBtn { background: #fff; border-color: #e2e8f0; }
+  [data-theme="xp"] .pendExternalBtn { border-radius: 4px; background: #fff; border-color: #7f9db9; }
+  [data-theme="contrast"] .pendExternalBtn { border: 2px solid #fff; border-radius: 0; background: #000; color: #fff; }
+  .pendExternalBtn:hover {
+    border-color: var(--a) !important;
+    color: var(--a) !important;
+    background: rgba(255,255,255,0.08) !important;
+    box-shadow: 0 0 0 2px rgba(110,231,255,.15) !important;
+  }
+  [data-theme="light"] .pendExternalBtn:hover { background: #eff6ff !important; box-shadow: 0 0 0 2px rgba(37,99,235,.15) !important; }
+  [data-theme="contrast"] .pendExternalBtn:hover { background: #fff !important; color: #000 !important; border-color: #fff !important; box-shadow: none !important; }
+  /* Tipografia interna do Card (Recepção) */
+  .pendPront {
+    font-size: 16px;
+    font-weight: 900;
+    letter-spacing: .4px;
+    color: var(--pront);
+    text-shadow: 0 6px 18px rgba(251,191,36,.20);
+    word-break: break-word;
+  }
+  [data-theme="light"] .pendPront, [data-theme="xp"] .pendPront, [data-theme="aero"] .pendPront, [data-theme="natal"] .pendPront { text-shadow: none; color: var(--pront); }
+  [data-theme="contrast"] .pendPront { text-shadow: none; color: #ffff00; }
+  .pendNome {
+    font-size: 12px;
+    color: var(--txt);
+    opacity: .95;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-width: 0;
+  }
+  /* =========================================
+     VISÃO EMAIL: LISTA CUSTOMIZADA
+     ========================================= */
+  .emailListWrap {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    padding-bottom: 10px;
+    width: 100%;
+  }
+  /* Cards da lista Email: altura fixa, scroll no pai */
+  .emailListWrap .pendItem {
+    min-height: 50px;
+    height: 50px;
+    border-left: 4px solid var(--a) !important;
+    padding: 0 12px;
+    justify-content: center;
+  }
+  .emailListWrap .pendItem:hover {
+    transform: translateX(3px);
+  }
+  /* =========================================
+     MINI BOTÕES (Email, Config)
+     ========================================= */
+  .miniCopyBtn {
+    width: 28px;
+    height: 28px;
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    color: var(--muted);
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: none;
+  }
+  .miniCopyBtn:hover {
+    background: rgba(255,255,255,0.05);
+    border-color: var(--a);
+    color: var(--a);
+  }
+  .labelWithBtn {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 6px;
+  }
+  /* =========================================
+     BARRA INFERIOR
+     ========================================= */
+  .bottomBar {
+    margin-top: 10px; padding-top: 10px; padding-bottom: 10px;
+    border-top: 1px solid var(--line);
+    display: flex; justify-content: flex-end; align-items: center; gap: 10px;
+    flex-shrink: 0;
+  }
+  .themeSelect {
+    padding: 6px 10px;
+    border-radius: 8px;
+    font-size: 12px;
+    width: auto;
+    background: var(--card);
+    border: 1px solid var(--line);
+    color: var(--txt);
+    cursor: pointer;
+  }
+  [data-theme="contrast"] .themeSelect { border: 2px solid #fff; background: #000; border-radius: 0; }
+  /* =========================================
+     CLASSE DE ALERTA PARA EMAIL
+     ========================================= */
+  .alert-email {
+    background: rgba(59, 130, 246, 0.25) !important;
+    border: 2px solid #3b82f6 !important;
+    color: #60a5fa !important;
+    font-weight: bold;
+    box-shadow: 0 0 10px rgba(59, 130, 246, 0.3);
+  }
+  [data-theme="light"] .alert-email,
+  [data-theme="xp"] .alert-email,
+  [data-theme="aero"] .alert-email {
+     background: #eff6ff !important;
+     color: #1e40af !important;
+  }
+  /* =========================================
+     BARRA DE PROGRESSO
+     ========================================= */
+  .progress-container {
+    width: 100%;
+    height: 14px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+    margin-top: 6px;
+    overflow: hidden;
+    display: none;
+  }
+  [data-theme="light"] .progress-container { background-color: #e2e8f0; }
+  .progress-bar {
+    height: 100%;
+    width: 0%;
+    background-color: var(--a);
+    transition: width 0.3s ease;
+  }
+  .progress-bar.uploading {
+    background-color: var(--green);
+    animation: pulseBar 1.5s infinite;
+  }
+  .progress-text {
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 4px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  @keyframes pulseBar {
+    0% { opacity: 1; }
+    50% { opacity: 0.6; }
+    100% { opacity: 1; }
+  }
+  .spin { display: inline-block; animation: rotation 1s infinite linear; }
+  @keyframes rotation { from { transform: rotate(0deg); } to { transform: rotate(359deg); } }
+  /* =========================================
+     MODAL DE CONFIGURAÇÕES
+     ========================================= */
+  .modal-overlay {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(4px);
+    z-index: 9999;
+    display: none;
+    align-items: center;
+    justify-content: center;
+  }
+  .modal-overlay.show { display: flex; }
+  .modal-content {
+    background: var(--card);
+    width: 600px;
+    max-width: 95%;
+    max-height: 90vh;
+    border-radius: var(--r);
+    border: 1px solid var(--line);
+    box-shadow: var(--shadow);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  [data-theme="contrast"] .modal-content { border: 2px solid #fff; background: #000; }
+  .modal-header {
+    padding: 15px 20px;
+    border-bottom: 1px solid var(--line);
+    display: flex; justify-content: space-between; align-items: center;
+    background: var(--header-bg);
+  }
+  .modal-header h3 { margin: 0; font-size: 16px; color: var(--txt); }
+  .close-btn {
+    background: transparent; border: none; font-size: 24px; color: var(--muted); cursor: pointer;
+  }
+  .close-btn:hover { color: var(--err); }
+  .modal-body { padding: 20px; overflow-y: auto; flex: 1; }
+  .modal-footer { padding: 15px 20px; border-top: 1px solid var(--line); display: flex; gap: 10px; justify-content: flex-end; align-items: center; }
+  .add-user-row { display: flex; gap: 10px; margin-bottom: 15px; }
+  .user-list-container {
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    max-height: 250px;
+    overflow-y: auto;
+  }
+  .user-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+  .user-table th { text-align: left; padding: 8px; background: rgba(255,255,255,0.05); color: var(--muted); position: sticky; top: 0; }
+  .user-table td { padding: 8px; border-top: 1px solid var(--line); color: var(--txt); }
+  .user-table tr:hover { background: rgba(255,255,255,0.03); }
+  .switch-label { display: flex; align-items: center; gap: 10px; cursor: pointer; font-weight: bold; font-size: 13px; }
+  .switch-label input { display: none; }
+  .slider {
+    width: 36px; height: 20px; background-color: var(--muted); border-radius: 20px; position: relative; transition: .3s;
+  }
+  .slider::before {
+    content: ""; position: absolute; height: 16px; width: 16px; left: 2px; bottom: 2px; background-color: white; border-radius: 50%; transition: .3s;
+  }
+  input:checked + .slider { background-color: var(--a); }
+  input:checked + .slider::before { transform: translateX(16px); }
+
+  /* =========================================
+     NOVA VISÃO EMAIL (DIVIDIDA) - ATUALIZADO
+     ========================================= */
+  
+  /* Sidebar da lista */
+  .email-sidebar {
+    display: flex;
+    flex-direction: column;
+    max-height: 100%;
+  }
+  /* Container da lista com scroll */
+  .email-list-container {
+    height: 520px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 10px 10px 10px 10px;
+    padding-right: 6px;
+  }
+  /* Header da lista com contador */
+  .email-header-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .email-count {
+    background: var(--a);
+    color: var(--btn-txt);
+    padding: 2px 8px;
+    border-radius: 6px;
+    font-weight: 900;
+    margin-left: 4px;
+  }
+
+  /* --- GRID DA ÁREA DE DETALHES (NOVO) --- */
+  .email-details-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Duas colunas iguais */
+    gap: 15px;
+    height: 100%;
+    overflow: hidden;
+  }
+
+  /* Coluna da Esquerda (Dados do Paciente + Texto Bruto) */
+  .email-col-left {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    overflow-y: auto;
+    padding-right: 8px;
+    border-right: 1px solid var(--line);
+  }
+
+  /* Coluna da Direita (Ação / Atendimento) */
+  .email-col-right {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    overflow-y: auto;
+    padding-left: 8px;
+    background: rgba(0,0,0,0.02); /* Leve destaque */
+  }
+
+  /* Box de Interpretação (Datas extraídas) */
+  .extraction-box {
+    background: rgba(110, 231, 255, 0.04);
+    border: 1px solid var(--a);
+    border-radius: 8px;
+    padding: 10px;
+  }
+  .extraction-title {
+    font-size: 11px; font-weight: bold; color: var(--a); margin-bottom: 8px;
+    display: flex; align-items: center; gap: 5px; text-transform: uppercase; letter-spacing: 0.5px;
+  }
+
+  /* Ajustes de inputs compactos para a direita */
+  .row-dates {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 8px;
+  }
+  
+  /* Área de Upload (Estilo igual ao da recepção) */
+  .upload-area {
+    border: 1px dashed var(--line);
+    border-radius: 8px;
+    padding: 10px;
+    background: rgba(255,255,255,0.03);
+  }
+
+  /* Ajuste para inputs na coluna direita ficarem mais compactos */
+  .email-col-right label { margin-bottom: 3px; font-size: 10px; }
+  .email-col-right input { padding: 8px; font-size: 12px; }
+
+/* === CSS DEFINITIVO: MODAL DE DOCUMENTOS === */
+/* === VISUAL SEGURO E BONITO === */
+
+.verify-area { 
+  max-height: 250px; 
+  overflow-y: auto; 
+  margin: 15px 0; 
+  border: 1px solid var(--line); 
+  border-radius: 12px; 
+  padding: 10px; 
+  background: rgba(0,0,0,0.1);
+}
+
+/* O Cartão */
+.doc-item {
+  display: flex; 
+  align-items: center; 
+  justify-content: space-between; /* Manda o Checkbox lá pra ponta direita */
+  padding: 10px 14px; 
+  background: var(--card);
+  border: 1px solid var(--line); 
+  border-radius: 8px; 
+  margin-bottom: 8px;
+  transition: background 0.2s;
+}
+
+.doc-item:hover {
+  border-color: var(--a);
+  background: rgba(255,255,255,0.05);
+}
+
+/* Grupo da Esquerda (Ícone + Texto) */
+.doc-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  overflow: hidden; /* Impede que estoure */
+}
+
+/* Ícone */
+.doc-icon {
+  font-size: 20px;
+  color: var(--a);
+  flex-shrink: 0;
+}
+
+/* O Link (Texto) */
+.doc-link {
+  color: var(--txt); 
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 13px;
+  
+  /* Regra de Ouro para cortar texto com segurança: */
+  display: inline-block;
+  max-width: 320px; /* Limite de largura (ajustado para o tamanho do modal) */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis; /* Põe os "..." */
+  vertical-align: middle;
+}
+
+.doc-link:hover {
+  color: var(--a);
+  text-decoration: underline;
+}
+
+/* Checkbox */
+.doc-check { 
+  transform: scale(1.3); 
+  cursor: pointer; 
+  accent-color: var(--green);
+  margin-left: 10px;
+}
+
+</style>
