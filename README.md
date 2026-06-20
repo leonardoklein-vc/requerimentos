@@ -1,4 +1,4 @@
-# 🏥 Smart Requests Manager - HCPA (Gestão de Requerimentos)
+# 🏥 Smart Requests Manager (Gestão de Requerimentos)
 
 ![Architecture](https://img.shields.io/badge/Architecture-Serverless_SPA-blue?style=for-the-badge)
 ![Google Apps Script](https://img.shields.io/badge/Backend-Google_Apps_Script-4285F4?style=for-the-badge&logo=google)
@@ -16,8 +16,7 @@ A liberação de documentos médicos é uma operação crítica. O fluxo anterio
 * **Gestão Manual de Arquivos:** Criação de pastas, conversão de imagens e unificação de PDFs feitos de forma manual, consumindo horas da equipe.
 * **Risco de Compliance (LGPD):** Dificuldade em garantir e auditar o bloqueio de dados sensíveis quando as solicitações eram feitas por terceiros (procuradores/familiares).
 
-*(Insira a Imagem da Planilha Antiga Aqui)*
-`![Planilha Antiga](./assets/planilha_antiga.png)`
+<img width="1683" height="935" alt="Image" src="https://github.com/user-attachments/assets/d0aff338-e047-4f0f-804f-3c9447cbc145" />
 
 ---
 
@@ -25,8 +24,8 @@ A liberação de documentos médicos é uma operação crítica. O fluxo anterio
 
 Para resolver esses problemas sem custos de infraestrutura em nuvem, o sistema foi desenhado para operar como um **Backend serverless (GAS)** alimentando um **Frontend reativo (HTML/CSS/JS)**.
 
-*(Insira a Imagem do Novo Painel Aqui)*
-`![Painel Novo](./assets/painel_novo.png)`
+<img width="1585" height="992" alt="req02" src="https://github.com/user-attachments/assets/c181eac6-1098-4221-878b-ef222dc4e6bb" />
+
 
 ### 🛠️ Core Features & Soluções Técnicas
 
@@ -57,8 +56,7 @@ A interface foi projetada para reduzir a fadiga cognitiva de operadores que pass
 * **Destaque Cognitivo:** Campos que exigem atenção (como pedidos feitos por terceiros) ganham destaque imediato com cores de alerta e *tooltips* explicativos.
 * **Theming Dinâmico:** Implementação nativa via variáveis CSS permitindo a troca em tempo real de temas (Dark Mode, Light, Alto Contraste para acessibilidade e até temas nostálgicos como Windows XP/Aero).
 
-*(Insira a Imagem do Modal de Validação Documental Aqui)*
-`![Validação Documental](./assets/validacao_docs.png)`
+<img width="1056" height="564" alt="req03" src="https://github.com/user-attachments/assets/7a5f76f0-081d-406b-bf17-711763d4e7ef" />
 
 ---
 
